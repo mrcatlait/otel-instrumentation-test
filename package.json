@@ -1,0 +1,43 @@
+{
+  "name": "otel-instrumentation-test",
+  "version": "0.0.1",
+  "description": "",
+  "author": "",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "nest start --watch",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.1",
+    "@nestjs/core": "^11.0.1",
+    "@nestjs/platform-express": "^11.0.1",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/sdk-logs": "^0.201.1",
+    "@opentelemetry/sdk-metrics": "^2.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1",
+    "vitest": "^3.1.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@swc/cli": "^0.7.7",
+    "@swc/core": "^1.11.29",
+    "@types/eslint__js": "^8.42.3",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.7",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.3.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.4.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.32.1",
+    "unplugin-swc": "^1.5.3",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
