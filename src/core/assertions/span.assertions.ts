@@ -50,26 +50,3 @@ export const toContainResourceAttribute: MatcherFn<Span[]> = (spans, expectedAtt
     expected: expectedAttribute,
   }
 }
-
-// export const toHaveHttpSpans: MatcherFn<Span[]> = (traces, expectedSpans: HttpSpan[]) => {
-//   expectedSpans.forEach((expected, index) => {
-//     expect(traces[index]).toMatchObject({
-//       name: `${expected.method} ${expected.path}`,
-//       kind: 2,
-//       attributes: expect.arrayContaining([
-//         {
-//           key: 'http.method',
-//           value: { stringValue: expected.method },
-//         },
-//         {
-//           key: 'http.url',
-//           value: { stringValue: expected.path },
-//         },
-//         {
-//           key: 'http.status_code',
-//           value: { intValue: expected.status },
-//         },
-//       ]),
-//     })
-//   })
-// }

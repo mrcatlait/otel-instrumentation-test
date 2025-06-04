@@ -2,6 +2,8 @@ import { HttpStatus } from '@nestjs/common'
 
 import { CollectorServices, MockCollector } from '../core/telemetry/collector.server'
 
+import { httpSpanSnapshot } from 'src/core/snapshots/spans'
+
 describe('HTTP Instrumentation', () => {
   let collector: MockCollector
   let collectorServices: CollectorServices
@@ -39,6 +41,8 @@ describe('HTTP Instrumentation', () => {
       path: '/404',
       status: HttpStatus.NOT_FOUND,
     })
+
+    expect(spans).toContain(httpSpanSnapshot)
   })
 
   it('should create a span for a request with resource attributes', async () => {
