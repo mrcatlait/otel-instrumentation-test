@@ -5,10 +5,12 @@ import { SpanVerifier } from '../../verifiers'
 
 import { AttributeValue } from 'src/core/telemetry/models/attribute.model'
 import { Span } from 'src/core/telemetry/models/span.model'
+import { Attribute } from 'src/modules/shared/models'
 
 type AnyValue = string | number | boolean | string[]
 
 export class SpanAssertionBuilder {
+  protected semanticAttributes: string[] = []
   private readonly model: Partial<Span> = {}
 
   constructor(
@@ -77,7 +79,9 @@ export class SpanAssertionBuilder {
     Error.captureStackTrace(error, this.assert)
     const originalStack = error.stack
 
-    this.assertions.push(new SpanAssertionVerifier(this.model, this.expectedCount, originalStack))
+    this.assertions.push(
+      new SpanAssertionVerifier(this.model, this.semanticAttributes, this.expectedCount, originalStack),
+    )
 
     return this.verifier
   }

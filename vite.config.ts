@@ -15,8 +15,8 @@ export default defineConfig(({ mode }) => ({
     globals: true,
     watch: false,
     reporters: ['default'],
-    testTimeout: 60000,
-    hookTimeout: 60000,
+    testTimeout: 600000,
+    hookTimeout: 600000,
     setupFiles: ['./src/tests/test-setup.ts'],
     include: ['./src/tests/**/*.spec.ts'],
     outputFile: {

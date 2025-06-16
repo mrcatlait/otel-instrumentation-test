@@ -40,17 +40,21 @@ export class CollectorController {
     return this.spanCollector.retrieve()
   }
 
-  // @Post('v1/metrics')
-  // handleMetrics(@Body() data: ResourceMetrics[]): void {
-  //   for (const resourceMetric of data) {
-  //     for (const scopeMetric of resourceMetric.scopeMetrics) {
-  //       if (!scopeMetric.metrics) {
-  //         continue
-  //       }
-  //       this.metricCollector.collect(scopeMetric.metrics)
-  //     }
-  //   }
-  // }
+  @Post('v1/metrics')
+  handleMetrics(@Body() data: any): TraceExportResponseDto {
+    // { resourceMetrics: [ { resource: [Object], scopeMetrics: [Array] } ] }
+    console.log(JSON.stringify(data))
+
+    return {}
+    // for (const resourceMetric of data) {
+    //   for (const scopeMetric of resourceMetric.scopeMetrics) {
+    //     if (!scopeMetric.metrics) {
+    //       continue
+    //     }
+    //     this.metricCollector.collect(scopeMetric.metrics)
+    //   }
+    // }
+  }
 
   // @Get('metrics')
   // getMetrics(): Promise<any[]> {

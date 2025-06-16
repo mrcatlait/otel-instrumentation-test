@@ -7,6 +7,7 @@ import { Span } from 'src/core/telemetry/models/span.model'
 export class SpanAssertionVerifier {
   constructor(
     private readonly model: Partial<Span>,
+    private readonly semanticAttributes: string[],
     private readonly expectedCount: number,
     private readonly originalStack?: string,
   ) {}
@@ -45,6 +46,9 @@ export class SpanAssertionVerifier {
         `resourceAttributes=[${this.model.resourceAttributes.map((a) => `${a.key}=${this.formatAttributeValue(a.value)}`).join(', ')}]`,
       )
     }
+    if (this.semanticAttributes.length > 0) {
+      parts.push(`semanticAttributes=[${this.semanticAttributes.join(', ')}]`)
+    }
 
     return parts.join(', ') || 'any span'
   }
@@ -75,6 +79,14 @@ export class SpanAssertionVerifier {
     if (this.model.resourceAttributes) {
       for (const expectedAttr of this.model.resourceAttributes) {
         if (!this.hasResourceAttribute(span, expectedAttr)) return false
+      }
+    }
+
+    // Check semantic attributes
+    if (this.semanticAttributes.length > 0) {
+      for (const expectedAttr of this.semanticAttributes) {
+        const hasAttribute = span.attributes.some((attr) => attr.key === expectedAttr)
+        if (!hasAttribute) return false
       }
     }
 

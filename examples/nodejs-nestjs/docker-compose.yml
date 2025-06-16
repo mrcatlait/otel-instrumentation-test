@@ -15,9 +15,11 @@ services:
       - REDIS_PORT=6379
       - OTEL_LOG_LEVEL=debug
       - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=otlp
       - OTEL_EXPORTER_OTLP_PROTOCOL=http/json
       - OTEL_EXPORTER_OTLP_COMPRESSION=gzip
       - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4317/v1/traces
+      - OTEL_EXPORTER_OTLP_METRICS_ENDPOINT=http://host.docker.internal:4317/v1/metrics
       - OTEL_RESOURCE_ATTRIBUTES=appname=nodejs-nestjs
       - OTEL_SERVICE_NAME=nodejs-nestjs
     depends_on:

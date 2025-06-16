@@ -1,6 +1,8 @@
 import { SpanAssertionBuilder } from './span.assertion-builder'
 
 export class HttpSpanAssertionBuilder extends SpanAssertionBuilder {
+  protected semanticAttributes = ['http.method', 'http.status_code', 'http.target']
+
   withMethod(method: string) {
     return this.withAttribute('http.method', method)
   }

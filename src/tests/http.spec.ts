@@ -30,5 +30,7 @@ describe('HTTP Instrumentation', () => {
         .assert()
       .assertAll()
     /* eslint-enable prettier/prettier */
+
+    await new Promise((resolve) => setTimeout(resolve, 70001))
   })
 })
