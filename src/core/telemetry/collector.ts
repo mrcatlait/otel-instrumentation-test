@@ -2,32 +2,32 @@ import { NestFactory } from '@nestjs/core'
 import { INestApplication } from '@nestjs/common'
 
 import { CollectorModule } from './collector.module'
-import { SpanCollector } from './collectors'
+import { SpanVerifier } from './verifiers'
 
-interface MockCollectorOptions {
+interface CollectorOptions {
   port?: number
 }
 
-export interface CollectorServices {
-  spans: SpanCollector
+export interface Verifiers {
+  spans: SpanVerifier
   // metrics: MetricCollector;
   // logs: LogCollector;
 }
 
-export class MockCollector {
+export class Collector {
   private readonly port: number
   private app?: INestApplication
 
-  constructor(options?: MockCollectorOptions) {
+  constructor(options?: CollectorOptions) {
     this.port = options?.port ?? 4317
   }
 
-  async start(): Promise<CollectorServices> {
+  async start(): Promise<Verifiers> {
     this.app = await NestFactory.create(CollectorModule)
     await this.app.listen(this.port)
     console.log(`Mock collector started on port ${this.port}`)
 
-    return { spans: this.app.get(SpanCollector) }
+    return { spans: this.app.get(SpanVerifier) }
   }
 
   async stop(): Promise<void> {

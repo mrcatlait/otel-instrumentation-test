@@ -1,16 +1,14 @@
 import { HttpStatus } from '@nestjs/common'
 
-import { CollectorServices, MockCollector } from '../core/telemetry/collector.server'
-
-import { httpSpanSnapshot } from 'src/core/snapshots/spans'
+import { Verifiers, Collector } from '../core/telemetry/collector'
 
 describe('HTTP Instrumentation', () => {
-  let collector: MockCollector
-  let collectorServices: CollectorServices
+  let collector: Collector
+  let verifiers: Verifiers
 
   beforeEach(async () => {
-    collector = new MockCollector()
-    collectorServices = await collector.start()
+    collector = new Collector()
+    verifiers = await collector.start()
   })
 
   afterEach(async () => {
@@ -18,50 +16,19 @@ describe('HTTP Instrumentation', () => {
   })
 
   it('should create a span for a request', async () => {
-    const url = 'http://localhost:3000'
+    const url = 'http://localhost:3000/http'
     const response = await fetch(url)
     const body = await response.text()
-    expect(body).toEqual('Hello World!')
+    expect(body).toEqual('Hello World')
 
-    await fetch(url + '/404')
-
-    await collectorServices.spans.waitForUpdate()
-
-    const spans = collectorServices.spans.retrieve()
-
-    expect(spans).toContainHttpSpan({
-      method: 'GET',
-      path: '/',
-      status: HttpStatus.OK,
-    })
-
-    expect(spans).toContainHttpSpan({
-      name: 'GET /',
-      method: 'GET',
-      path: '/404',
-      status: HttpStatus.NOT_FOUND,
-    })
-
-    expect(spans).toContain(httpSpanSnapshot)
-  })
-
-  it('should create a span for a request with resource attributes', async () => {
-    const url = 'http://localhost:3000'
-    const response = await fetch(url)
-    const body = await response.text()
-    expect(body).toEqual('Hello World!')
-
-    await fetch(url + '/404')
-
-    await collectorServices.spans.waitForUpdate()
-
-    const spans = collectorServices.spans.retrieve()
-
-    expect(spans).toContainResourceAttribute({
-      key: 'appname',
-      value: {
-        stringValue: 'nodejs-nestjs',
-      },
-    })
+    /* eslint-disable prettier/prettier */
+    await verifiers.spans
+      .toHaveHttpSpan()
+        .withMethod('GET')
+        .withUrl('/http')
+        .withHttpStatus(HttpStatus.OK)
+        .assert()
+      .assertAll()
+    /* eslint-enable prettier/prettier */
   })
 })

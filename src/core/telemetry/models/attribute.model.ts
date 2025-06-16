@@ -3,7 +3,7 @@ export interface Attribute {
   value: AttributeValue
 }
 
-interface AttributeValue {
+export interface AttributeValue {
   stringValue?: string | null
   boolValue?: boolean | null
   intValue?: number | null

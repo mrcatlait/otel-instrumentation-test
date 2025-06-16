@@ -1,0 +1,30 @@
+services:
+  redis:
+    image: redis:latest
+    networks:
+      - local_net
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - OTEL_LOG_LEVEL=debug
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_EXPORTER_OTLP_PROTOCOL=http/json
+      - OTEL_EXPORTER_OTLP_COMPRESSION=gzip
+      - OTEL_EXPORTER_OTLP_TRACES_ENDPOINT=http://host.docker.internal:4317/v1/traces
+      - OTEL_RESOURCE_ATTRIBUTES=appname=nodejs-nestjs
+      - OTEL_SERVICE_NAME=nodejs-nestjs
+    depends_on:
+      - redis
+    networks:
+      - local_net
+
+networks:
+  local_net:
+    driver: bridge

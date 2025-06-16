@@ -22,5 +22,6 @@ export default defineConfig(({ mode }) => ({
     outputFile: {
       junit: './reports/junit-report.xml',
     },
+    fileParallelism: false,
   },
 }))

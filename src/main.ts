@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core'
 
-import { CollectorModule } from './core/collector/collector.module'
+import { CollectorModule } from './core/telemetry/collector.module'
 
 async function bootstrap() {
   const app = await NestFactory.create(CollectorModule)
