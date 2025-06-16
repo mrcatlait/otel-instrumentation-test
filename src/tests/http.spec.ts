@@ -1,6 +1,6 @@
 import { HttpStatus } from '@nestjs/common'
 
-import { Verifiers, Collector } from '../core/telemetry/collector'
+import { Verifiers, Collector } from '../modules/collector'
 
 describe('HTTP Instrumentation', () => {
   let collector: Collector
@@ -31,6 +31,6 @@ describe('HTTP Instrumentation', () => {
       .assertAll()
     /* eslint-enable prettier/prettier */
 
-    await new Promise((resolve) => setTimeout(resolve, 70001))
+    // await new Promise((resolve) => setTimeout(resolve, 70001))
   })
 })
