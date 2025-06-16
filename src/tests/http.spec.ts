@@ -29,8 +29,12 @@ describe('HTTP Instrumentation', () => {
         .withHttpStatus(HttpStatus.OK)
         .assert()
       .assertAll()
-    /* eslint-enable prettier/prettier */
 
-    // await new Promise((resolve) => setTimeout(resolve, 70001))
+    await verifiers.metrics
+      .toHaveServerRequestDuration()
+        .withName('http.server.duration')
+        .assert()
+      .assertAll()
+    /* eslint-enable prettier/prettier */
   })
 })

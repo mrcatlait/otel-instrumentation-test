@@ -1,3 +1,7 @@
+export * from './gauge.model'
+export * from './histogram-data-point.model'
+export * from './histogram.model'
 export * from './metric.model'
+export * from './number-data-point.model'
 export * from './resource-metric.model'
 export * from './scope-metric.model'

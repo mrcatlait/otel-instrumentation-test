@@ -3,6 +3,7 @@ import { INestApplication } from '@nestjs/common'
 
 import { CollectorModule } from './collector.module'
 import { SpanVerifier } from './traces/verifiers'
+import { MetricVerifier } from './metrics/verifiers'
 
 interface CollectorOptions {
   port?: number
@@ -10,6 +11,7 @@ interface CollectorOptions {
 
 export interface Verifiers {
   spans: SpanVerifier
+  metrics: MetricVerifier
 }
 
 export class Collector {
@@ -25,7 +27,7 @@ export class Collector {
     await this.app.listen(this.port)
     console.log(`Mock collector started on port ${this.port}`)
 
-    return { spans: this.app.get(SpanVerifier) }
+    return { spans: this.app.get(SpanVerifier), metrics: this.app.get(MetricVerifier) }
   }
 
   async stop(): Promise<void> {
