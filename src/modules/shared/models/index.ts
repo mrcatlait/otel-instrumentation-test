@@ -1,4 +1,7 @@
+export * from './any-value.model'
 export * from './attribute.model'
+export * from './collector-options.model'
 export * from './fixed64.model'
+export * from './key-value.model'
 export * from './resource.model'
 export * from './instrumentation-scope.model'

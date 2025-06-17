@@ -7,7 +7,9 @@ describe('HTTP Instrumentation', () => {
   let verifiers: Verifiers
 
   beforeEach(async () => {
-    collector = new Collector()
+    collector = new Collector({
+      timeout: 60000,
+    })
     verifiers = await collector.start()
   })
 
@@ -31,8 +33,10 @@ describe('HTTP Instrumentation', () => {
       .assertAll()
 
     await verifiers.metrics
-      .toHaveServerRequestDuration()
-        .withName('http.server.duration')
+      .toHaveHttpServerDuration()
+        .withMethod('GET')
+        .withStatusCode(HttpStatus.OK)
+        .withRoute('/http')
         .assert()
       .assertAll()
     /* eslint-enable prettier/prettier */
